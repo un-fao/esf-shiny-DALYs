@@ -1,0 +1,15 @@
+"country","factor_type","factor_id","factor_description","weight"
+"Zimbabwe","inherent","vulnerable_distribution","Direct distribution to a vulnerable population (e.g. distribution in hospital, elderly facilities, baby care unit, ...)",3
+"Zimbabwe","inherent","vulnerable_food","Food made for a vulnerable population (such as Baby Food)",2
+"Zimbabwe","mitigation","certification","Certification of the business food safety control system: Accreditation of the food safety control system (e.g. HACCP, ISO 22000, ...) by a reputable body",2
+"Zimbabwe","mitigation","training","An adequate Food Safety Training program (e.g. PAHO Food Handlers Manual) for employees (manipulating/processing food) is in place",2
+"Zimbabwe","mitigation","export_recognition","Recognition of the business by a relevant authority to export products to other countries",2
+"Zimbabwe","mitigation","potable_water","Access to potable water, as demonstrated by annual on site test results or by municipal authorities",2
+"Zimbabwe","mitigation","sanitary_facilities","Presence of and access by the personnel of functional and adequately maintained sanitary facilities (e.g. toilets)",2
+"Zimbabwe","mitigation","handwashing_facilities","Access by the personnel to functional and adequately maintained hand washing facilities",2
+"Zimbabwe","mitigation","electrical_power","Presence and continuous access to electrical power",2
+"Zimbabwe","mitigation","cooling_equipment","Presence and continuous access of sufficient cooling equipments according to the expected need (e.g. adequate cooling system if the product needs to be cool)",2
+"Zimbabwe","compliance","current_nonconformity","Inspection results. Presence of at least one important non-conformity in the current visit directly linked to food safety",3
+"Zimbabwe","compliance","past_nonconformity","Inspection results. Presence of at least one important non-conformity in the last visit directly linked to food safety",4
+"Zimbabwe","compliance","enforcement_history","History of enforcement actions in the past 5 years: was this business targeted by an enforcement action such as permit suspension or temporary cessation of activities by inspection authorities",5
+"Zimbabwe","compliance","outbreak_linked","Was this business linked in the past 3 years to a documented food safety related outbreak?",2
