@@ -29,21 +29,6 @@ food_groups <- c(
   "Other foods"
 )
 
-# Mapping between app names and CSV names (for partial matches)
-food_group_mapping <- list(
-  "Lamb" = "Lamb",
-  "Beef" = "Beef",
-  "Pork" = "Pork",
-  "Poultry" = "Poultry",
-  "Eggs" = "Eggs",
-  "Dairy" = "Dairy",
-  "Fish and shellfish" = "Fish and shellfish",
-  "Fruit and vegetables" = "Fruit and vegetables",
-  "Beverages" = "Beverages",
-  "Grains" = "Grains",
-  "Other foods" = "Other foods"
-)
-
 # Define hazard types (short labels for table)
 hazard_types <- list(
   grow = "Product where pathogens can grow (e.g. meat, cheese)",
