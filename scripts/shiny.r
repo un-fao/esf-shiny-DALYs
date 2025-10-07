@@ -29,6 +29,21 @@ food_groups <- c(
   "Other foods"
 )
 
+# Mapping between app names and CSV names (for partial matches)
+food_group_mapping <- list(
+  "Lamb" = "Lamb",
+  "Beef" = "Beef",
+  "Pork" = "Pork",
+  "Poultry" = "Poultry",
+  "Eggs" = "Eggs",
+  "Dairy" = "Dairy",
+  "Fish and shellfish" = "Fish and shellfish",
+  "Fruit and vegetables" = "Fruit and vegetables",
+  "Beverages" = "Beverages",
+  "Grains" = "Grains",
+  "Other foods" = "Other foods"
+)
+
 # Define hazard types (short labels for table)
 hazard_types <- list(
   grow = "Product where pathogens can grow (e.g. meat, cheese)",
@@ -528,11 +543,28 @@ server <- function(input, output, session) {
 
     for (fg in food_groups) {
       fg_clean <- gsub(" ", "_", fg)
+
+      # Use grepl with more flexible matching
       fg_match <- country_dalys$food_group[grepl(
         fg,
         country_dalys$food_group,
         ignore.case = TRUE
-      )][1]
+      )]
+
+      # If no match found, try partial match from the beginning
+      if (length(fg_match) == 0) {
+        fg_match <- country_dalys$food_group[startsWith(
+          trimws(country_dalys$food_group),
+          fg
+        )]
+      }
+
+      # Take first match
+      if (length(fg_match) > 0) {
+        fg_match <- fg_match[1]
+      } else {
+        next # Skip if no match found
+      }
 
       for (hz in names(hazard_types)) {
         input_id <- paste0("qty_", hz, "_", fg_clean)
@@ -723,18 +755,27 @@ server <- function(input, output, session) {
     results <- calculateResults()
 
     multiplier_data <- data.frame(
-      cluster = c("Inherent", "Mitigation", "Compliance"),
+      cluster = factor(
+        c("Inherent", "Mitigation", "Compliance"),
+        levels = c("Inherent", "Mitigation", "Compliance")
+      ),
       multiplier = c(
         results$inherent_multiplier,
         results$mitigation_multiplier,
         results$compliance_multiplier
-      ),
-      color = c("#a8c7d9", "#d9c89e", "#d9a8a8")
+      )
+    )
+
+    # Define colors in the same order as factor levels
+    cluster_colors <- c(
+      "Inherent" = "#d9edf7", # Light blue
+      "Mitigation" = "#fcf8e3", # Light beige/cream
+      "Compliance" = "#b8d4b8" # Light green
     )
 
     ggplot(multiplier_data, aes(x = cluster, y = multiplier, fill = cluster)) +
       geom_bar(stat = "identity", show.legend = FALSE) +
-      scale_fill_manual(values = multiplier_data$color) +
+      scale_fill_manual(values = cluster_colors) +
       labs(
         title = "Risk Factor Multipliers",
         x = "Risk Factor Cluster",
@@ -775,7 +816,7 @@ server <- function(input, output, session) {
         results$mitigated_risk,
         results$final_risk
       ),
-      color = c("#cccccc", "#a8c7d9", "#d9c89e", "#d9a8a8")
+      color = c("#cccccc", "#d9edf7", "#fcf8e3", "#f2dede")
     )
 
     ggplot(progression_data, aes(x = stage, y = value, fill = stage)) +
