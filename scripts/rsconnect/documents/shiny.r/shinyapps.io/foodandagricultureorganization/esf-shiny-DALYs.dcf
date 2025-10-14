@@ -1,0 +1,10 @@
+name: esf-shiny-DALYs
+title:
+username: foodandagricultureorganization
+account: foodandagricultureorganization
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 15751856
+bundleId: 11033058
+url: https://foodandagricultureorganization.shinyapps.io/esf-shiny-DALYs/
+version: 1
