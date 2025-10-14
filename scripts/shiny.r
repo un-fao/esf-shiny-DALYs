@@ -120,36 +120,69 @@ ui <- fluidPage(
   ),
 
   tags$header(
-    tags$ul( 
-      tags$li(tags$img(src = "https://www.fao.org/images/corporatelibraries/fao-logo/fao-logo-archive/fao-logo-black-3lines-en.svg", 
-                       height = '40px')),
-      tags$li("Food Safety Questionnaire",style="font-weight: 600"),
-      class="b"),
-    class="header"), 
-  
+    tags$ul(
+      tags$li(tags$img(
+        src = "https://www.fao.org/images/corporatelibraries/fao-logo/fao-logo-archive/fao-logo-black-3lines-en.svg",
+        height = '40px'
+      )),
+      tags$li(
+        "Food Safety Questionnaire",
+        style = "font-weight: 1000; font-size: 24px; padding-left: 20px;"
+      ),
+      class = "b"
+    ),
+    class = "header"
+  ),
+
   uiOutput("mainContent"),
-  
+
   tags$footer(
     tags$div(
       tags$div(
         tags$ul(
-          tags$li(tags$a(href="mailto:food-quality@fao.org","Contact us")), 
-          tags$li(tags$a(href="https://www.fao.org/contact-us/terms/en/",
-                         "Terms and Conditions",target="_blank")), 
-          tags$li(tags$a(href="https://www.fao.org/contact-us/data-protection-and-privacy/en/", 
-                         "Data Protection and privacy",target="_blank")),
-          tags$li(tags$a(href="https://www.fao.org/contact-us/scam-alert/en/", 
-                         "Scam Alert",target="_blank")),
-          tags$li(tags$a(href="https://www.fao.org/audit-and-investigations/reporting-misconduct/en/", 
-                         "Report Misconduct",target="_blank")),
-          tags$li(tags$a(href="https://www.fao.org/transparency/en", 
-                         "Transparency and accountability",target="_blank")),
-          class="a"),class="col-lg-11"),
+          tags$li(tags$a(href = "mailto:food-quality@fao.org", "Contact us")),
+          tags$li(tags$a(
+            href = "https://www.fao.org/contact-us/terms/en/",
+            "Terms and Conditions",
+            target = "_blank"
+          )),
+          tags$li(tags$a(
+            href = "https://www.fao.org/contact-us/data-protection-and-privacy/en/",
+            "Data Protection and privacy",
+            target = "_blank"
+          )),
+          tags$li(tags$a(
+            href = "https://www.fao.org/contact-us/scam-alert/en/",
+            "Scam Alert",
+            target = "_blank"
+          )),
+          tags$li(tags$a(
+            href = "https://www.fao.org/audit-and-investigations/reporting-misconduct/en/",
+            "Report Misconduct",
+            target = "_blank"
+          )),
+          tags$li(tags$a(
+            href = "https://www.fao.org/transparency/en",
+            "Transparency and accountability",
+            target = "_blank"
+          )),
+          class = "a"
+        ),
+        class = "col-lg-11"
+      ),
       tags$div(
-        tags$a(href="https://www.fao.org/contact-us/terms/en/",style="color: black",
-               HTML("© FAO&nbsp;2025"),target="_blank"),class="col-lg-1"),
-      class="row col-lg-12"),
-    class="footer")
+        tags$a(
+          href = "https://www.fao.org/contact-us/terms/en/",
+          style = "color: black",
+          HTML("© FAO&nbsp;2025"),
+          target = "_blank"
+        ),
+        class = "col-lg-1"
+      ),
+      class = "row col-lg-12"
+    ),
+    class = "footer"
+  )
 )
 
 # Server
@@ -290,7 +323,7 @@ server <- function(input, output, session) {
     )
 
     fluidPage(
-      h3("Food Safety Questionnaire"),
+      # h3("Food Safety Questionnaire"),
 
       # Country selection
       fluidRow(
