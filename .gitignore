@@ -9,6 +9,7 @@
 .Rhistory
 .RData
 .Ruserdata
+.Rproj
 
 # === Temporary and cache files ===
 # Ignore logs, auxiliary files, cache, and temporary outputs
