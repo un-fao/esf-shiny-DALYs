@@ -94,11 +94,62 @@ ui <- fluidPage(
         font-weight: bold;
         text-align: left;
       }
+      .header {
+        background: white;color: black;
+        position: fixed;left: 0; top: 0;width: 100%;
+        font-family: 'Open Sans';height: 60px; z-index: 1000;
+      }
+      .body {
+        padding-top: 80px;
+        padding-bottom: 220px;
+      }
+      .footer {
+        background-color: white;
+        width: 100%;
+        font-family: 'Open Sans';min-height: 200px;padding:25px 0;
+        margin-top: 50px; border-top: 1px solid #e0e0e0;
+      }
+      ul.a {list-style:none;margin-left: 30px;}
+      ul.a li{border-right: 1px solid #c4c4c4;display: inline-block;float: left;padding: 0 5px;}
+      ul.a li:last-child{border-right:0;}
+      ul.b {list-style:none;height: 50px;line-height: 50px;}
+      ul.b li{border-right: 1px solid #c4c4c4;display: inline-block;float: left;padding: 0 5px;}
+      ul.b li:last-child{border-right:0;
     "
     ))
   ),
 
-  uiOutput("mainContent")
+  tags$header(
+    tags$ul( 
+      tags$li(tags$img(src = "https://www.fao.org/images/corporatelibraries/fao-logo/fao-logo-archive/fao-logo-black-3lines-en.svg", 
+                       height = '40px')),
+      tags$li("Food Safety Questionnaire",style="font-weight: 600"),
+      class="b"),
+    class="header"), 
+  
+  uiOutput("mainContent"),
+  
+  tags$footer(
+    tags$div(
+      tags$div(
+        tags$ul(
+          tags$li(tags$a(href="mailto:food-quality@fao.org","Contact us")), 
+          tags$li(tags$a(href="https://www.fao.org/contact-us/terms/en/",
+                         "Terms and Conditions",target="_blank")), 
+          tags$li(tags$a(href="https://www.fao.org/contact-us/data-protection-and-privacy/en/", 
+                         "Data Protection and privacy",target="_blank")),
+          tags$li(tags$a(href="https://www.fao.org/contact-us/scam-alert/en/", 
+                         "Scam Alert",target="_blank")),
+          tags$li(tags$a(href="https://www.fao.org/audit-and-investigations/reporting-misconduct/en/", 
+                         "Report Misconduct",target="_blank")),
+          tags$li(tags$a(href="https://www.fao.org/transparency/en", 
+                         "Transparency and accountability",target="_blank")),
+          class="a"),class="col-lg-11"),
+      tags$div(
+        tags$a(href="https://www.fao.org/contact-us/terms/en/",style="color: black",
+               HTML("© FAO&nbsp;2025"),target="_blank"),class="col-lg-1"),
+      class="row col-lg-12"),
+    class="footer")
 )
 
 # Server
