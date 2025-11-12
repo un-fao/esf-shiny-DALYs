@@ -1,7 +1,6 @@
 # Deploying the shiny app to shinyapps.io
 
 install.package("rsconnect")
-# install.package("openssl@1.4.5")
 
 
 rsconnect::deployApp(account = "foodandagricultureorganization",server = "shinyapps.io",
