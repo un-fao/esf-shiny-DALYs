@@ -44,25 +44,108 @@ ui <- fluidPage(
   tags$head(
     tags$style(HTML(
       "
+       body,
+       input,
+       select,
+       textarea,
+       button,
+       label,
+       .form-control,
+       .selectize-input,
+       .shiny-input-container {
+       font-family: 'Source Sans Variable' ;
+       }
       .btn-validate { 
         background-color: #337ab7; 
         color: white; 
         font-size: 18px; 
         padding: 10px 30px;
-        margin-top: 20px;
+        margin-top: 10px;
+        font-family: 'Source Sans Variable' ;
       }
-      .section-header {
-        background-color: #f5f5f5;
+      .section-header-product {
+        background-color: #BCD4DE; /*#f5f5f5;*/
         padding: 10px;
         margin-top: 20px;
         margin-bottom: 10px;
         font-weight: bold;
         border-left: 4px solid #337ab7;
+        font-family: 'Source Sans Variable' ;
+      }
+      .section-header-inherent {
+        background-color: #B0C69F;
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        border-left: 4px solid #337ab7;
+        font-family: 'Source Sans Variable' ;
+      }
+      .section-header-inherent + .row .form-group {
+        min-height: 50px; 
+        display: flex;
+        flex-direction: column;
+      }
+      .section-header-inherent + .row .form-group label {
+        min-height: 40px; 
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 5px;
+      }
+      .section-header-inherent + .row .form-group .form-control {
+        margin-top: auto;
+      }
+      .section-header-mitigation {
+        background-color: #DACCC0;
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        border-left: 4px solid #337ab7;
+        font-family: 'Source Sans Variable' ;
+      }
+      .section-header-mitigation + .row .form-group {
+        min-height: 50px; 
+        display: flex;
+        flex-direction: column;
+      }
+      .section-header-mitigation + .row .form-group label {
+        min-height: 40px; 
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 5px;
+      }
+      .section-header-mitigation + .row .form-group .form-control {
+        margin-top: auto;
+      }
+      .section-header-compliance {
+        background-color: #E9D095;
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        border-left: 4px solid #337ab7;
+        font-family: 'Source Sans Variable' ;
+      }
+      .section-header-compliance + .row .form-group {
+        min-height: 50px; 
+        display: flex;
+        flex-direction: column;
+      }
+      .section-header-compliance + .row .form-group label {
+        min-height: 40px; 
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 5px;
+      }
+      .section-header-compliance + .row .form-group .form-control {
+        margin-top: auto;
       }
       .error-message {
         color: red;
         font-weight: bold;
         margin-top: 10px;
+        font-family: 'Source Sans Variable' ;
       }
       .food-table {
         margin-top: 20px;
@@ -70,13 +153,15 @@ ui <- fluidPage(
       .food-table table {
         width: 100%;
         border-collapse: collapse;
+        font-family: 'Source Sans Variable' ;
       }
       .food-table th {
-        background-color: #337ab7;
+        background-color: #337ab7; /*#BCD4DE;*/
         color: white;
         padding: 10px;
         text-align: center;
         border: 1px solid #ddd;
+        font-family: 'Source Sans Variable' ;
       }
       .food-table td {
         padding: 5px;
@@ -87,27 +172,38 @@ ui <- fluidPage(
         width: 80px;
         padding: 5px;
         text-align: center;
+        font-family: 'Source Sans Variable';
       }
       .hazard-label {
         background-color: #f5f5f5;
         padding: 8px;
         font-weight: bold;
         text-align: left;
+        font-family: 'Source Sans Variable' ;
       }
       .header {
-        background: white;color: black;
-        position: fixed;left: 0; top: 0;width: 100%;
-        font-family: 'Open Sans';height: 60px; z-index: 1000;
+        background: white;
+        color: black;
+        position: fixed;
+        left: 0; top: 0;
+        width: 100%;
+        font-family: 'Source Sans Variable' !important;
+        height: 60px; 
+        z-index: 1000;
       }
       .body {
         padding-top: 80px;
         padding-bottom: 220px;
+        font-family: 'Source Sans Variable' ;
       }
       .footer {
         background-color: white;
         width: 100%;
-        font-family: 'Open Sans';min-height: 200px;padding:25px 0;
-        margin-top: 50px; border-top: 1px solid #e0e0e0;
+        font-family: 'Source Sans Variable' !important;
+        min-height: 200px;
+        padding:25px 0;
+        margin-top: 50px; 
+        border-top: 1px solid #e0e0e0;
       }
       ul.a {list-style:none;margin-left: 30px;}
       ul.a li{border-right: 1px solid #c4c4c4;display: inline-block;float: left;padding: 0 5px;}
@@ -348,73 +444,91 @@ server <- function(input, output, session) {
       hr(),
 
       # Product quantities section - Excel-style table
-      div(class = "section-header", "Product Type (in kg)"),
+      div(class = "section-header-product", "Product Type (in kg)"),
 
       div(class = "food-table", do.call(tags$table, table_rows)),
 
       # Inherent Risk Factors
-      div(class = "section-header", "Inherent Risk Factors"),
-      lapply(
-        1:nrow(risk_factors[risk_factors$factor_type == "inherent", ]),
-        function(i) {
-          factor <- risk_factors[risk_factors$factor_type == "inherent", ][i, ]
-          input_id <- paste0("inherent_", factor$factor_id)
-          selectInput(
-            input_id,
-            label = factor$factor_description,
-            choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
-            selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
-              user_inputs$risk_factors[[input_id]]
-            } else {
-              ""
-            }
-          )
-        }
+      div(class = "section-header-inherent", "Inherent Risk Factors"),
+      fluidRow(
+        lapply(
+          1:nrow(risk_factors[risk_factors$factor_type == "inherent", ]),
+          function(i) {
+            factor <- risk_factors[risk_factors$factor_type == "inherent", ][i, ]
+            input_id <- paste0("inherent_", factor$factor_id)
+            
+            column(
+              width=6,
+              selectInput(
+                input_id,
+                label = factor$factor_description,
+                choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
+                selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
+                  user_inputs$risk_factors[[input_id]]
+                } else {
+                  ""
+                },width="750px"
+              )
+            )
+          }
+        )
       ),
 
       # Mitigation Factors
-      div(class = "section-header", "Mitigation Factors"),
-      p("(When present, these factors reduce the risk)"),
-      lapply(
-        1:nrow(risk_factors[risk_factors$factor_type == "mitigation", ]),
-        function(i) {
-          factor <- risk_factors[risk_factors$factor_type == "mitigation", ][
-            i,
-          ]
-          input_id <- paste0("mitigation_", factor$factor_id)
-          selectInput(
-            input_id,
-            label = factor$factor_description,
-            choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
-            selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
-              user_inputs$risk_factors[[input_id]]
-            } else {
-              ""
-            }
-          )
-        }
+      div(class = "section-header-mitigation", "Mitigation Risk Factors"),
+      # p("(When present, these factors reduce the risk)"),
+      fluidRow(
+        lapply(
+          1:nrow(risk_factors[risk_factors$factor_type == "mitigation", ]),
+          function(i) {
+            factor <- risk_factors[risk_factors$factor_type == "mitigation", ][
+              i,
+            ]
+            input_id <- paste0("mitigation_", factor$factor_id)
+            
+            column(
+              width=6,
+              selectInput(
+                input_id,
+                label = factor$factor_description,
+                choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
+                selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
+                  user_inputs$risk_factors[[input_id]]
+                } else {
+                  ""
+                },width="750px"
+              )
+            )
+          }
+        )
       ),
 
       # Compliance Factors
-      div(class = "section-header", "Compliance Factors"),
-      lapply(
-        1:nrow(risk_factors[risk_factors$factor_type == "compliance", ]),
-        function(i) {
-          factor <- risk_factors[risk_factors$factor_type == "compliance", ][
-            i,
-          ]
-          input_id <- paste0("compliance_", factor$factor_id)
-          selectInput(
-            input_id,
-            label = factor$factor_description,
-            choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
-            selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
-              user_inputs$risk_factors[[input_id]]
-            } else {
-              ""
-            }
-          )
-        }
+      div(class = "section-header-compliance", "Compliance Risk Factors"),
+      fluidRow(
+        lapply(
+          1:nrow(risk_factors[risk_factors$factor_type == "compliance", ]),
+          function(i) {
+            factor <- risk_factors[risk_factors$factor_type == "compliance", ][
+              i,
+            ]
+            input_id <- paste0("compliance_", factor$factor_id)
+            
+            column(
+              width = 6,
+              selectInput(
+                input_id,
+                label = factor$factor_description,
+                choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
+                selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
+                  user_inputs$risk_factors[[input_id]]
+                } else {
+                  ""
+                },width="750px"
+              )
+            )
+          }
+        )
       ),
 
       # Error message display
@@ -441,14 +555,52 @@ server <- function(input, output, session) {
       hr(),
 
       # Section 1: Final Risk Results (MOVED TO TOP)
+      div(
+        style = "background-color: #E8BF9B; padding: 20px; border-radius: 50px; text-align: center;",
+        h4("Final Risk", style= "color: white; font-weight: bold; font-size: 30px"),
+        h2(
+          style= "color: white; font-weight: bold; font-size: 30px", #a94442
+          format(results$final_risk, scientific = FALSE, digits = 8)
+        )
+      ),
+
+      hr(),
+
+      # Section 2: Product Type and DALYs
+      # h4("Product Type"),
+      # DTOutput("productTypeTable"),
+      # 
+      # hr(),
+      # 
+      # # Section 3: Risk Factor Clusters
+      # h4("Risk Factor Cluster"),
+      # DTOutput("riskClusterTable"),
+      # 
+      # hr(),
+
+      # Section 4: Visualizations
+      # h4("Visualizations"),
+      # fluidRow(
+      #   column(6, plotOutput("dalysBarPlot", height = "400px")),
+      #   column(6, plotOutput("riskMultiplierPlot", height = "400px"))
+      # ),
+      # 
+      # br(),
+
+      fluidRow(
+        column(12, plotOutput("riskProgressionPlot", height = "300px"))
+      ),
+      
+      hr(),
+      
       fluidRow(
         column(
           4,
           div(
-            style = "background-color: #d9edf7; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Inherent Risk"),
+            style = "background-color: #B0C69F; padding: 20px; border-radius: 5px; text-align: center;",
+            h4("Inherent Risk", style= "color: white; font-weight: bold; font-size: 30px"),
             h2(
-              style = "color: #31708f;",
+              style= "color: white; font-weight: bold; font-size: 30px", #31708f
               format(results$inherent_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -456,10 +608,10 @@ server <- function(input, output, session) {
         column(
           4,
           div(
-            style = "background-color: #fcf8e3; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Mitigated Risk"),
+            style = "background-color: #DACCC0; padding: 20px; border-radius: 5px; text-align: center;",
+            h4("Mitigated Risk", style= "color: white; font-weight: bold; font-size: 30px"),
             h2(
-              style = "color: #8a6d3b;",
+              style= "color: white; font-weight: bold; font-size: 30px", #8a6d3b
               format(results$mitigated_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -467,41 +619,14 @@ server <- function(input, output, session) {
         column(
           4,
           div(
-            style = "background-color: #f2dede; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Final Risk"),
+            style = "background-color: #E8BF9B; padding: 20px; border-radius: 5px; text-align: center;",
+            h4("Final Risk", style= "color: white; font-weight: bold; font-size: 30px"),
             h2(
-              style = "color: #a94442;",
+              style= "color: white; font-weight: bold; font-size: 30px", #a94442
               format(results$final_risk, scientific = FALSE, digits = 8)
             )
           )
         )
-      ),
-
-      hr(),
-
-      # Section 2: Product Type and DALYs
-      h4("Product Type"),
-      DTOutput("productTypeTable"),
-
-      hr(),
-
-      # Section 3: Risk Factor Clusters
-      h4("Risk Factor Cluster"),
-      DTOutput("riskClusterTable"),
-
-      hr(),
-
-      # Section 4: Visualizations
-      h4("Visualizations"),
-      fluidRow(
-        column(6, plotOutput("dalysBarPlot", height = "400px")),
-        column(6, plotOutput("riskMultiplierPlot", height = "400px"))
-      ),
-
-      br(),
-
-      fluidRow(
-        column(12, plotOutput("riskProgressionPlot", height = "300px"))
       )
     )
   }
@@ -748,122 +873,122 @@ server <- function(input, output, session) {
   }
 
   # DALYs Bar Plot
-  output$dalysBarPlot <- renderPlot({
-    results <- calculateResults()
-
-    if (!is.null(results$dalys_by_group) && nrow(results$dalys_by_group) > 0) {
-      dalys_summary <- results$dalys_by_group %>%
-        group_by(food_group) %>%
-        summarise(total = sum(total_dalys, na.rm = TRUE)) %>%
-        arrange(desc(total)) %>%
-        filter(total > 0)
-
-      if (nrow(dalys_summary) > 0) {
-        ggplot(
-          dalys_summary,
-          aes(x = reorder(food_group, total), y = total, fill = food_group)
-        ) +
-          geom_bar(stat = "identity", show.legend = FALSE) +
-          coord_flip() +
-          labs(
-            title = "DALYs Contribution by Food Group",
-            x = "Food Group",
-            y = "DALYs"
-          ) +
-          theme_minimal(base_size = 14) +
-          theme(
-            plot.title = element_text(hjust = 0.5, face = "bold"),
-            axis.text.y = element_text(size = 11)
-          ) +
-          scale_fill_manual(
-            values = c(
-              "#b3d9e6",
-              "#c2e0b3",
-              "#f5d6a8",
-              "#e8c4d4",
-              "#d4c8e0",
-              "#c8e0d8",
-              "#f0dcc8",
-              "#e0d8c8",
-              "#d8e8e0",
-              "#e0e0d8",
-              "#d8d8e0"
-            )
-          ) +
-          geom_text(
-            aes(label = format(total, scientific = FALSE, digits = 6)),
-            hjust = -0.1,
-            size = 3.5
-          )
-      } else {
-        ggplot() +
-          annotate(
-            "text",
-            x = 0.5,
-            y = 0.5,
-            label = "No product quantities entered",
-            size = 6
-          ) +
-          theme_void()
-      }
-    } else {
-      ggplot() +
-        annotate(
-          "text",
-          x = 0.5,
-          y = 0.5,
-          label = "No product quantities entered",
-          size = 6
-        ) +
-        theme_void()
-    }
-  })
+  # output$dalysBarPlot <- renderPlot({
+  #   results <- calculateResults()
+  # 
+  #   if (!is.null(results$dalys_by_group) && nrow(results$dalys_by_group) > 0) {
+  #     dalys_summary <- results$dalys_by_group %>%
+  #       group_by(food_group) %>%
+  #       summarise(total = sum(total_dalys, na.rm = TRUE)) %>%
+  #       arrange(desc(total)) %>%
+  #       filter(total > 0)
+  # 
+  #     if (nrow(dalys_summary) > 0) {
+  #       ggplot(
+  #         dalys_summary,
+  #         aes(x = reorder(food_group, total), y = total, fill = food_group)
+  #       ) +
+  #         geom_bar(stat = "identity", show.legend = FALSE) +
+  #         coord_flip() +
+  #         labs(
+  #           title = "DALYs Contribution by Food Group",
+  #           x = "Food Group",
+  #           y = "DALYs"
+  #         ) +
+  #         theme_minimal(base_size = 14) +
+  #         theme(
+  #           plot.title = element_text(hjust = 0.5, face = "bold"),
+  #           axis.text.y = element_text(size = 11)
+  #         ) +
+  #         scale_fill_manual(
+  #           values = c(
+  #             "#b3d9e6",
+  #             "#c2e0b3",
+  #             "#f5d6a8",
+  #             "#e8c4d4",
+  #             "#d4c8e0",
+  #             "#c8e0d8",
+  #             "#f0dcc8",
+  #             "#e0d8c8",
+  #             "#d8e8e0",
+  #             "#e0e0d8",
+  #             "#d8d8e0"
+  #           )
+  #         ) +
+  #         geom_text(
+  #           aes(label = format(total, scientific = FALSE, digits = 6)),
+  #           hjust = -0.1,
+  #           size = 3.5
+  #         )
+  #     } else {
+  #       ggplot() +
+  #         annotate(
+  #           "text",
+  #           x = 0.5,
+  #           y = 0.5,
+  #           label = "No product quantities entered",
+  #           size = 6
+  #         ) +
+  #         theme_void()
+  #     }
+  #   } else {
+  #     ggplot() +
+  #       annotate(
+  #         "text",
+  #         x = 0.5,
+  #         y = 0.5,
+  #         label = "No product quantities entered",
+  #         size = 6
+  #       ) +
+  #       theme_void()
+  #   }
+  # })
 
   # Risk Multiplier Plot
-  output$riskMultiplierPlot <- renderPlot({
-    results <- calculateResults()
-
-    multiplier_data <- data.frame(
-      cluster = factor(
-        c("Inherent", "Mitigation", "Compliance"),
-        levels = c("Inherent", "Mitigation", "Compliance")
-      ),
-      multiplier = c(
-        results$inherent_multiplier,
-        results$mitigation_multiplier,
-        results$compliance_multiplier
-      )
-    )
-
-    # Define colors in the same order as factor levels
-    cluster_colors <- c(
-      "Inherent" = "#d9edf7", # Light blue
-      "Mitigation" = "#fcf8e3", # Light beige/cream
-      "Compliance" = "#b8d4b8" # Light green
-    )
-
-    ggplot(multiplier_data, aes(x = cluster, y = multiplier, fill = cluster)) +
-      geom_bar(stat = "identity", show.legend = FALSE) +
-      scale_fill_manual(values = cluster_colors) +
-      labs(
-        title = "Risk Factor Multipliers",
-        x = "Risk Factor Cluster",
-        y = "Multiplier Value"
-      ) +
-      theme_minimal(base_size = 14) +
-      theme(
-        plot.title = element_text(hjust = 0.5, face = "bold"),
-        axis.text.x = element_text(size = 12)
-      ) +
-      geom_text(
-        aes(label = format(multiplier, digits = 4)),
-        vjust = -0.5,
-        size = 5,
-        fontface = "bold",
-        color = "#333333"
-      ) +
-      ylim(0, max(multiplier_data$multiplier) * 1.15)
-  })
+  # output$riskMultiplierPlot <- renderPlot({
+  #   results <- calculateResults()
+  # 
+  #   multiplier_data <- data.frame(
+  #     cluster = factor(
+  #       c("Inherent", "Mitigation", "Compliance"),
+  #       levels = c("Inherent", "Mitigation", "Compliance")
+  #     ),
+  #     multiplier = c(
+  #       results$inherent_multiplier,
+  #       results$mitigation_multiplier,
+  #       results$compliance_multiplier
+  #     )
+  #   )
+  # 
+  #   # Define colors in the same order as factor levels
+  #   cluster_colors <- c(
+  #     "Inherent" = "#B0C69F", # "#d9edf7", # Light blue
+  #     "Mitigation" = "#DACCC0", # "#fcf8e3", # Light beige/cream
+  #     "Compliance" = "#E9D095" # "#b8d4b8" # Light green
+  #   )
+  # 
+  #   ggplot(multiplier_data, aes(x = cluster, y = multiplier, fill = cluster)) +
+  #     geom_bar(stat = "identity", show.legend = FALSE) +
+  #     scale_fill_manual(values = cluster_colors) +
+  #     labs(
+  #       title = "Risk Factor Multipliers",
+  #       x = "Risk Factor Cluster",
+  #       y = "Multiplier Value"
+  #     ) +
+  #     theme_minimal(base_size = 14) +
+  #     theme(
+  #       plot.title = element_text(hjust = 0.5, face = "bold"),
+  #       axis.text.x = element_text(size = 12)
+  #     ) +
+  #     geom_text(
+  #       aes(label = format(multiplier, digits = 4)),
+  #       vjust = -0.5,
+  #       size = 5,
+  #       fontface = "bold",
+  #       color = "#333333"
+  #     ) +
+  #     ylim(0, max(multiplier_data$multiplier) * 1.15)
+  # })
 
   # Risk Progression Plot
   output$riskProgressionPlot <- renderPlot({
@@ -871,21 +996,21 @@ server <- function(input, output, session) {
 
     progression_data <- data.frame(
       stage = factor(
-        c("Total DALYs", "Inherent Risk", "Mitigated Risk", "Final Risk"),
+        c("Inherent Risk", "Mitigated Risk", "Final Risk"), # c("Total DALYs", "Inherent Risk", "Mitigated Risk", "Final Risk"),
         levels = c(
-          "Total DALYs",
+          # "Total DALYs",
           "Inherent Risk",
           "Mitigated Risk",
           "Final Risk"
         )
       ),
       value = c(
-        results$total_dalys,
+        # results$total_dalys,
         results$inherent_risk,
         results$mitigated_risk,
         results$final_risk
       ),
-      color = c("#cccccc", "#d9edf7", "#fcf8e3", "#f2dede")
+      color = c("#B0C69F", "#DACCC0", "#E8BF9B") # c("#cccccc", "#d9edf7", "#fcf8e3", "#f2dede")
     )
 
     ggplot(progression_data, aes(x = stage, y = value, fill = stage)) +
@@ -899,12 +1024,12 @@ server <- function(input, output, session) {
       theme_minimal(base_size = 14) +
       theme(
         plot.title = element_text(hjust = 0.5, face = "bold"),
-        axis.text.x = element_text(angle = 0, size = 11)
+        axis.text.x = element_text(angle = 0, size = 15)
       ) +
       geom_text(
         aes(label = format(value, scientific = FALSE, digits = 6)),
         vjust = -0.5,
-        size = 4,
+        size = 10,
         fontface = "bold",
         color = "#333333"
       ) +
