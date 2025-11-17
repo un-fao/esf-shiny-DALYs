@@ -1033,7 +1033,9 @@ server <- function(input, output, session) {
       theme_minimal(base_size = 14) +
       theme(
         plot.title = element_text(hjust = 0.5, face = "bold"),
-        axis.text.x = element_text(angle = 0, size = 15)
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        panel.grid.major.x = element_blank()
       ) +
       geom_text(
         aes(label = format(value, scientific = FALSE, digits = 6)),
