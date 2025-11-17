@@ -221,7 +221,68 @@ ui <- fluidPage(
       ul.a li:last-child{border-right:0;}
       ul.b {list-style:none;height: 50px;line-height: 50px;}
       ul.b li{border-right: 1px solid #c4c4c4;display: inline-block;float: left;padding: 0 5px;}
-      ul.b li:last-child{border-right:0;
+      ul.b li:last-child{border-right:0;}
+      .country-selection-container {
+        text-align: center;
+        padding: 20px 30px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .country-selection-container label {
+        font-size: 28px !important;
+        font-weight: bold !important;
+        color: #337ab7;
+        margin-bottom: 15px !important;
+        font-family: 'Source Sans Variable' !important;
+        display: block !important;
+        text-align: center !important;
+      }
+      .country-selection-container .form-group {
+        text-align: center;
+        margin: 0 auto;
+      }
+      .country-selection-container .shiny-input-container {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .country-selection-container .form-control {
+        font-size: 22px !important;
+        padding: 15px !important;
+        height: auto !important;
+        text-align: center;
+        border: 2px solid #337ab7;
+        border-radius: 5px;
+        font-family: 'Source Sans Variable' !important;
+        display: block;
+        margin: 0 auto;
+        min-width: 400px;
+      }
+      .country-selection-container .selectize-input {
+        font-size: 22px !important;
+        padding: 15px 50px 15px 15px !important;
+        height: auto !important;
+        text-align: center;
+        border: 2px solid #337ab7;
+        border-radius: 5px;
+        font-family: 'Source Sans Variable' !important;
+        margin: 0 auto;
+        min-width: 400px;
+      }
+      .country-selection-container .selectize-input .item {
+        text-align: center;
+        margin: 0 auto;
+      }
+      .country-selection-container .selectize-dropdown {
+        font-size: 20px !important;
+        font-family: 'Source Sans Variable' !important;
+        text-align: center;
+      }
+      .country-selection-container .selectize-dropdown-content {
+        text-align: center;
+      }
     "
     ))
   ),
@@ -434,16 +495,20 @@ server <- function(input, output, session) {
       # Country selection
       fluidRow(
         column(
-          4, offset=4,
-          selectInput(
-            "country_select",
-            label = h4("Select Country:"),
-            choices = available_countries,
-            selected = selected_country()
+          6,
+          offset = 3,
+          div(
+            class = "country-selection-container",
+            selectInput(
+              "country_select",
+              label = tags$strong("Select a country"),
+              choices = available_countries,
+              selected = selected_country()
+            )
           )
-        ),
+        )
       ),
-      
+
       div(
         style = "padding-top: 30px;",
         p("Please complete all required fields before proceeding.")
