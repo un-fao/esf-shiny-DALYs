@@ -44,6 +44,22 @@ ui <- fluidPage(
   tags$head(
     tags$style(HTML(
       "
+       * {
+       font-family: 'Source Sans Variable', sans-serif !important;
+     }
+     
+     h1, h2, h3, h4, h5, h6 {
+       font-family: 'Source Sans Variable', sans-serif !important;
+     }
+     
+     .dataTables_wrapper {
+       font-family: 'Source Sans Variable', sans-serif !important;
+     }
+     
+     table.dataTable {
+       font-family: 'Source Sans Variable', sans-serif !important;
+     }
+     
        body,
        input,
        select,
