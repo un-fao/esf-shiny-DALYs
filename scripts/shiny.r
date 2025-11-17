@@ -566,7 +566,7 @@ server <- function(input, output, session) {
       # Section 1: Final Risk Results (MOVED TO TOP)
       div(
         style = "background-color: #E8BF9B; padding: 20px; border-radius: 50px; text-align: center;",
-        h4("Final Risk", style= "color: white; font-weight: bold; font-size: 30px"),
+        h4("Final Risk", style= "color: white; font-weight: bold; font-size: 35px"),
         h2(
           style= "color: white; font-weight: bold; font-size: 30px", #a94442
           format(results$final_risk, scientific = FALSE, digits = 8)
@@ -607,7 +607,7 @@ server <- function(input, output, session) {
           4,
           div(
             style = "background-color: #B0C69F; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Inherent Risk", style= "color: white; font-weight: bold; font-size: 30px"),
+            h4("Inherent Risk", style= "color: white; font-weight: bold; font-size: 35px"),
             h2(
               style= "color: white; font-weight: bold; font-size: 30px",
               format(results$inherent_risk, scientific = FALSE, digits = 8)
@@ -618,7 +618,7 @@ server <- function(input, output, session) {
           4,
           div(
             style = "background-color: #DACCC0; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Mitigated Risk", style= "color: white; font-weight: bold; font-size: 30px"),
+            h4("Mitigated Risk", style= "color: white; font-weight: bold; font-size: 35px"),
             h2(
               style= "color: white; font-weight: bold; font-size: 30px",
               format(results$mitigated_risk, scientific = FALSE, digits = 8)
@@ -629,7 +629,7 @@ server <- function(input, output, session) {
           4,
           div(
             style = "background-color: #E8BF9B; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Final Risk", style= "color: white; font-weight: bold; font-size: 30px"),
+            h4("Final Risk", style= "color: white; font-weight: bold; font-size: 35px"),
             h2(
               style= "color: white; font-weight: bold; font-size: 30px",
               format(results$final_risk, scientific = FALSE, digits = 8)
