@@ -609,7 +609,7 @@ server <- function(input, output, session) {
             style = "background-color: #B0C69F; padding: 20px; border-radius: 5px; text-align: center;",
             h4("Inherent Risk", style= "color: white; font-weight: bold; font-size: 30px"),
             h2(
-              style= "color: white; font-weight: bold; font-size: 30px", #31708f
+              style= "color: white; font-weight: bold; font-size: 30px",
               format(results$inherent_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -620,7 +620,7 @@ server <- function(input, output, session) {
             style = "background-color: #DACCC0; padding: 20px; border-radius: 5px; text-align: center;",
             h4("Mitigated Risk", style= "color: white; font-weight: bold; font-size: 30px"),
             h2(
-              style= "color: white; font-weight: bold; font-size: 30px", #8a6d3b
+              style= "color: white; font-weight: bold; font-size: 30px",
               format(results$mitigated_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -631,7 +631,7 @@ server <- function(input, output, session) {
             style = "background-color: #E8BF9B; padding: 20px; border-radius: 5px; text-align: center;",
             h4("Final Risk", style= "color: white; font-weight: bold; font-size: 30px"),
             h2(
-              style= "color: white; font-weight: bold; font-size: 30px", #a94442
+              style= "color: white; font-weight: bold; font-size: 30px",
               format(results$final_risk, scientific = FALSE, digits = 8)
             )
           )
