@@ -58,10 +58,18 @@ ui <- fluidPage(
       .btn-validate { 
         background-color: #337ab7; 
         color: white; 
-        font-size: 18px; 
-        padding: 10px 30px;
-        margin-top: 10px;
-        font-family: 'Source Sans Variable' ;
+        font-size: 24px; 
+        padding: 18px 50px;
+        margin-top: 20px;
+        font-family: 'Source Sans Variable';
+        font-weight: bold;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .btn-validate:hover {
+        background-color: #23527c;
       }
       .section-header-product {
         background-color: #BCD4DE; /*#f5f5f5;*/
@@ -221,7 +229,95 @@ ui <- fluidPage(
       ul.a li:last-child{border-right:0;}
       ul.b {list-style:none;height: 50px;line-height: 50px;}
       ul.b li{border-right: 1px solid #c4c4c4;display: inline-block;float: left;padding: 0 5px;}
-      ul.b li:last-child{border-right:0;
+      ul.b li:last-child{border-right:0;}
+      .country-selection-container {
+        text-align: center;
+        padding: 20px 30px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .country-selection-container label {
+        font-size: 28px !important;
+        font-weight: bold !important;
+        color: #337ab7;
+        margin-bottom: 15px !important;
+        font-family: 'Source Sans Variable' !important;
+        display: block !important;
+        text-align: center !important;
+      }
+      .country-selection-container .form-group {
+        text-align: center;
+        margin: 0 auto;
+      }
+      .country-selection-container .shiny-input-container {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .country-selection-container .form-control {
+        font-size: 22px !important;
+        padding: 15px !important;
+        height: auto !important;
+        text-align: center;
+        border: 2px solid #337ab7;
+        border-radius: 5px;
+        font-family: 'Source Sans Variable' !important;
+        display: block;
+        margin: 0 auto;
+        min-width: 400px;
+      }
+      .country-selection-container .selectize-input {
+        font-size: 22px !important;
+        padding: 15px 50px 15px 15px !important;
+        height: auto !important;
+        text-align: center;
+        border: 2px solid #337ab7;
+        border-radius: 5px;
+        font-family: 'Source Sans Variable' !important;
+        margin: 0 auto;
+        min-width: 400px;
+      }
+      .country-selection-container .selectize-input .item {
+        text-align: center;
+        margin: 0 auto;
+      }
+      .country-selection-container .selectize-dropdown {
+        font-size: 20px !important;
+        font-family: 'Source Sans Variable' !important;
+        text-align: center;
+      }
+      .country-selection-container .selectize-dropdown-content {
+        text-align: center;
+      }
+      .question-box-inherent {
+        background-color: #E8F2DC;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border-left: 4px solid #B0C69F;
+      }
+      .question-box-mitigation {
+        background-color: #F2EDE8;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border-left: 4px solid #DACCC0;
+      }
+      .question-box-compliance {
+        background-color: #F9EFD9;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border-left: 4px solid #E9D095;
+      }
+      .question-box-inherent label,
+      .question-box-mitigation label,
+      .question-box-compliance label {
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
     "
     ))
   ),
@@ -434,16 +530,20 @@ server <- function(input, output, session) {
       # Country selection
       fluidRow(
         column(
-          4, offset=4,
-          selectInput(
-            "country_select",
-            label = h4("Select Country:"),
-            choices = available_countries,
-            selected = selected_country()
+          6,
+          offset = 3,
+          div(
+            class = "country-selection-container",
+            selectInput(
+              "country_select",
+              label = tags$strong("Select a country"),
+              choices = available_countries,
+              selected = selected_country()
+            )
           )
-        ),
+        )
       ),
-      
+
       div(
         style = "padding-top: 30px;",
         p("Please complete all required fields before proceeding.")
@@ -462,26 +562,33 @@ server <- function(input, output, session) {
         lapply(
           1:nrow(risk_factors[risk_factors$factor_type == "inherent", ]),
           function(i) {
-            factor <- risk_factors[risk_factors$factor_type == "inherent", ][i, ]
+            factor <- risk_factors[risk_factors$factor_type == "inherent", ][
+              i,
+            ]
             input_id <- paste0("inherent_", factor$factor_id)
-            
+
             column(
-              width=6,
-              selectInput(
-                input_id,
-                label = factor$factor_description,
-                choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
-                selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
-                  user_inputs$risk_factors[[input_id]]
-                } else {
-                  ""
-                },width="750px"
+              width = 6,
+              div(
+                class = "question-box-inherent",
+                selectInput(
+                  input_id,
+                  label = factor$factor_description,
+                  choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
+                  selected = if (
+                    !is.null(user_inputs$risk_factors[[input_id]])
+                  ) {
+                    user_inputs$risk_factors[[input_id]]
+                  } else {
+                    ""
+                  },
+                  width = "100%"
+                )
               )
             )
           }
         )
-      )
-      ,
+      ),
 
       # Mitigation Factors
       div(class = "section-header-mitigation", "Mitigation Risk Factors"),
@@ -494,18 +601,24 @@ server <- function(input, output, session) {
               i,
             ]
             input_id <- paste0("mitigation_", factor$factor_id)
-            
+
             column(
-              width=6,
-              selectInput(
-                input_id,
-                label = factor$factor_description,
-                choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
-                selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
-                  user_inputs$risk_factors[[input_id]]
-                } else {
-                  ""
-                },width="750px"
+              width = 6,
+              div(
+                class = "question-box-mitigation",
+                selectInput(
+                  input_id,
+                  label = factor$factor_description,
+                  choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
+                  selected = if (
+                    !is.null(user_inputs$risk_factors[[input_id]])
+                  ) {
+                    user_inputs$risk_factors[[input_id]]
+                  } else {
+                    ""
+                  },
+                  width = "100%"
+                )
               )
             )
           }
@@ -522,18 +635,24 @@ server <- function(input, output, session) {
               i,
             ]
             input_id <- paste0("compliance_", factor$factor_id)
-            
+
             column(
               width = 6,
-              selectInput(
-                input_id,
-                label = factor$factor_description,
-                choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
-                selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
-                  user_inputs$risk_factors[[input_id]]
-                } else {
-                  ""
-                },width="1000px"
+              div(
+                class = "question-box-compliance",
+                selectInput(
+                  input_id,
+                  label = factor$factor_description,
+                  choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
+                  selected = if (
+                    !is.null(user_inputs$risk_factors[[input_id]])
+                  ) {
+                    user_inputs$risk_factors[[input_id]]
+                  } else {
+                    ""
+                  },
+                  width = "100%"
+                )
               )
             )
           }
