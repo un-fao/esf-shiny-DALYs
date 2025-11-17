@@ -6,10 +6,14 @@ library(shinydashboard)
 library(DT)
 library(ggplot2)
 library(dplyr)
+library(readxl)
 
 # Load settings from CSV files
-dalys_values <- read.csv("data/dalys_values.csv", stringsAsFactors = FALSE)
-risk_factors <- read.csv("data/risk_factors.csv", stringsAsFactors = FALSE)
+# dalys_values <- read.csv("data/dalys_values.csv", stringsAsFactors = FALSE)
+# risk_factors <- read.csv("data/risk_factors.csv", stringsAsFactors = FALSE)
+
+dalys_values <- read_excel("data/XLSX/dalys_values.xlsx", col_types = "text")
+risk_factors <- read_excel("data/XLSX/risk_factors.xls", col_types = "text")
 
 # Get list of available countries
 available_countries <- unique(dalys_values$country)
@@ -701,9 +705,12 @@ server <- function(input, output, session) {
       # Section 1: Final Risk Results (MOVED TO TOP)
       div(
         style = "background-color: #E8BF9B; padding: 20px; border-radius: 50px; text-align: center;",
-        h4("Final Risk", style= "color: white; font-weight: bold; font-size: 35px"),
+        h4(
+          "Final Risk",
+          style = "color: white; font-weight: bold; font-size: 35px"
+        ),
         h2(
-          style= "color: white; font-weight: bold; font-size: 30px", #a94442
+          style = "color: white; font-weight: bold; font-size: 30px", #a94442
           format(results$final_risk, scientific = FALSE, digits = 8)
         )
       ),
@@ -713,13 +720,13 @@ server <- function(input, output, session) {
       # Section 2: Product Type and DALYs
       # h4("Product Type"),
       # DTOutput("productTypeTable"),
-      # 
+      #
       # hr(),
-      # 
+      #
       # # Section 3: Risk Factor Clusters
       # h4("Risk Factor Cluster"),
       # DTOutput("riskClusterTable"),
-      # 
+      #
       # hr(),
 
       # Section 4: Visualizations
@@ -728,23 +735,26 @@ server <- function(input, output, session) {
       #   column(6, plotOutput("dalysBarPlot", height = "400px")),
       #   column(6, plotOutput("riskMultiplierPlot", height = "400px"))
       # ),
-      # 
+      #
       # br(),
 
       fluidRow(
         column(12, plotOutput("riskProgressionPlot", height = "300px"))
       ),
-      
+
       hr(),
-      
+
       fluidRow(
         column(
           4,
           div(
             style = "background-color: #B0C69F; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Inherent Risk", style= "color: white; font-weight: bold; font-size: 35px"),
+            h4(
+              "Inherent Risk",
+              style = "color: white; font-weight: bold; font-size: 35px"
+            ),
             h2(
-              style= "color: white; font-weight: bold; font-size: 30px",
+              style = "color: white; font-weight: bold; font-size: 30px",
               format(results$inherent_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -753,9 +763,12 @@ server <- function(input, output, session) {
           4,
           div(
             style = "background-color: #DACCC0; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Mitigated Risk", style= "color: white; font-weight: bold; font-size: 35px"),
+            h4(
+              "Mitigated Risk",
+              style = "color: white; font-weight: bold; font-size: 35px"
+            ),
             h2(
-              style= "color: white; font-weight: bold; font-size: 30px",
+              style = "color: white; font-weight: bold; font-size: 30px",
               format(results$mitigated_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -764,9 +777,12 @@ server <- function(input, output, session) {
           4,
           div(
             style = "background-color: #E8BF9B; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Final Risk", style= "color: white; font-weight: bold; font-size: 35px"),
+            h4(
+              "Final Risk",
+              style = "color: white; font-weight: bold; font-size: 35px"
+            ),
             h2(
-              style= "color: white; font-weight: bold; font-size: 30px",
+              style = "color: white; font-weight: bold; font-size: 30px",
               format(results$final_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -1019,14 +1035,14 @@ server <- function(input, output, session) {
   # DALYs Bar Plot
   # output$dalysBarPlot <- renderPlot({
   #   results <- calculateResults()
-  # 
+  #
   #   if (!is.null(results$dalys_by_group) && nrow(results$dalys_by_group) > 0) {
   #     dalys_summary <- results$dalys_by_group %>%
   #       group_by(food_group) %>%
   #       summarise(total = sum(total_dalys, na.rm = TRUE)) %>%
   #       arrange(desc(total)) %>%
   #       filter(total > 0)
-  # 
+  #
   #     if (nrow(dalys_summary) > 0) {
   #       ggplot(
   #         dalys_summary,
@@ -1091,7 +1107,7 @@ server <- function(input, output, session) {
   # Risk Multiplier Plot
   # output$riskMultiplierPlot <- renderPlot({
   #   results <- calculateResults()
-  # 
+  #
   #   multiplier_data <- data.frame(
   #     cluster = factor(
   #       c("Inherent", "Mitigation", "Compliance"),
@@ -1103,14 +1119,14 @@ server <- function(input, output, session) {
   #       results$compliance_multiplier
   #     )
   #   )
-  # 
+  #
   #   # Define colors in the same order as factor levels
   #   cluster_colors <- c(
   #     "Inherent" = "#B0C69F", # "#d9edf7", # Light blue
   #     "Mitigation" = "#DACCC0", # "#fcf8e3", # Light beige/cream
   #     "Compliance" = "#E9D095" # "#b8d4b8" # Light green
   #   )
-  # 
+  #
   #   ggplot(multiplier_data, aes(x = cluster, y = multiplier, fill = cluster)) +
   #     geom_bar(stat = "identity", show.legend = FALSE) +
   #     scale_fill_manual(values = cluster_colors) +
@@ -1167,10 +1183,10 @@ server <- function(input, output, session) {
       ) +
       theme_minimal(base_size = 14) +
       theme(
-        text=element_text(family="Source Sans Variable"),
+        text = element_text(family = "Source Sans Variable"),
         plot.title = element_text(hjust = 0.5, face = "bold"),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
         panel.grid.major.x = element_blank()
       ) +
       geom_text(
@@ -1179,7 +1195,7 @@ server <- function(input, output, session) {
         size = 10,
         fontface = "bold",
         color = "#333333",
-        family="Source Sans Variable"
+        family = "Source Sans Variable"
       ) +
       ylim(0, max(progression_data$value) * 1.2)
   })
