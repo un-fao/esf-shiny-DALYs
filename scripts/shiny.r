@@ -1032,6 +1032,7 @@ server <- function(input, output, session) {
       ) +
       theme_minimal(base_size = 14) +
       theme(
+        text=element_text(family="Source Sans Variable"),
         plot.title = element_text(hjust = 0.5, face = "bold"),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
@@ -1042,7 +1043,8 @@ server <- function(input, output, session) {
         vjust = -0.5,
         size = 10,
         fontface = "bold",
-        color = "#333333"
+        color = "#333333",
+        family="Source Sans Variable"
       ) +
       ylim(0, max(progression_data$value) * 1.2)
   })
