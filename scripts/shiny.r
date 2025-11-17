@@ -44,6 +44,22 @@ ui <- fluidPage(
   tags$head(
     tags$style(HTML(
       "
+       * {
+       font-family: 'Source Sans Variable', sans-serif !important;
+     }
+     
+     h1, h2, h3, h4, h5, h6 {
+       font-family: 'Source Sans Variable', sans-serif !important;
+     }
+     
+     .dataTables_wrapper {
+       font-family: 'Source Sans Variable', sans-serif !important;
+     }
+     
+     table.dataTable {
+       font-family: 'Source Sans Variable', sans-serif !important;
+     }
+     
        body,
        input,
        select,
@@ -685,7 +701,7 @@ server <- function(input, output, session) {
       # Section 1: Final Risk Results (MOVED TO TOP)
       div(
         style = "background-color: #E8BF9B; padding: 20px; border-radius: 50px; text-align: center;",
-        h4("Final Risk", style= "color: white; font-weight: bold; font-size: 30px"),
+        h4("Final Risk", style= "color: white; font-weight: bold; font-size: 35px"),
         h2(
           style= "color: white; font-weight: bold; font-size: 30px", #a94442
           format(results$final_risk, scientific = FALSE, digits = 8)
@@ -726,7 +742,7 @@ server <- function(input, output, session) {
           4,
           div(
             style = "background-color: #B0C69F; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Inherent Risk", style= "color: white; font-weight: bold; font-size: 30px"),
+            h4("Inherent Risk", style= "color: white; font-weight: bold; font-size: 35px"),
             h2(
               style= "color: white; font-weight: bold; font-size: 30px",
               format(results$inherent_risk, scientific = FALSE, digits = 8)
@@ -737,7 +753,7 @@ server <- function(input, output, session) {
           4,
           div(
             style = "background-color: #DACCC0; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Mitigated Risk", style= "color: white; font-weight: bold; font-size: 30px"),
+            h4("Mitigated Risk", style= "color: white; font-weight: bold; font-size: 35px"),
             h2(
               style= "color: white; font-weight: bold; font-size: 30px",
               format(results$mitigated_risk, scientific = FALSE, digits = 8)
@@ -748,7 +764,7 @@ server <- function(input, output, session) {
           4,
           div(
             style = "background-color: #E8BF9B; padding: 20px; border-radius: 5px; text-align: center;",
-            h4("Final Risk", style= "color: white; font-weight: bold; font-size: 30px"),
+            h4("Final Risk", style= "color: white; font-weight: bold; font-size: 35px"),
             h2(
               style= "color: white; font-weight: bold; font-size: 30px",
               format(results$final_risk, scientific = FALSE, digits = 8)
@@ -1151,15 +1167,19 @@ server <- function(input, output, session) {
       ) +
       theme_minimal(base_size = 14) +
       theme(
+        text=element_text(family="Source Sans Variable"),
         plot.title = element_text(hjust = 0.5, face = "bold"),
-        axis.text.x = element_text(angle = 0, size = 15)
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        panel.grid.major.x = element_blank()
       ) +
       geom_text(
         aes(label = format(value, scientific = FALSE, digits = 6)),
         vjust = -0.5,
         size = 10,
         fontface = "bold",
-        color = "#333333"
+        color = "#333333",
+        family="Source Sans Variable"
       ) +
       ylim(0, max(progression_data$value) * 1.2)
   })
