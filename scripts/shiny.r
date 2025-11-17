@@ -156,8 +156,8 @@ ui <- fluidPage(
         font-family: 'Source Sans Variable' ;
       }
       .food-table th {
-        background-color: #337ab7; /*#BCD4DE;*/
-        color: white;
+        background-color: #BCD4DE; /*#337ab7;*/
+        color: black;
         padding: 10px;
         text-align: center;
         border: 1px solid #ddd;
@@ -167,12 +167,23 @@ ui <- fluidPage(
         padding: 5px;
         text-align: center;
         border: 1px solid #ddd;
+        vertical-align: middle;
+      }
+      .food-table td .form-group {
+        margin: 0 auto;
+        text-align: center;
       }
       .food-table input[type='number'] {
         width: 80px;
         padding: 5px;
         text-align: center;
         font-family: 'Source Sans Variable';
+        margin: 0 auto;
+        display: inline-block;
+      }
+       .food-table td .shiny-input-container {
+        text-align: center;
+        margin: 0 auto;
       }
       .hazard-label {
         background-color: #f5f5f5;
@@ -420,11 +431,10 @@ server <- function(input, output, session) {
 
     fluidPage(
       # h3("Food Safety Questionnaire"),
-
       # Country selection
       fluidRow(
         column(
-          4,
+          4, offset=4,
           selectInput(
             "country_select",
             label = h4("Select Country:"),
@@ -432,19 +442,17 @@ server <- function(input, output, session) {
             selected = selected_country()
           )
         ),
-        column(
-          8,
-          div(
-            style = "padding-top: 30px;",
-            p("Please complete all required fields before proceeding.")
-          )
-        )
+      ),
+      
+      div(
+        style = "padding-top: 30px;",
+        p("Please complete all required fields before proceeding.")
       ),
 
       hr(),
 
       # Product quantities section - Excel-style table
-      div(class = "section-header-product", "Product Type (in kg)"),
+      # div(class = "section-header-product", "Product Type (in kg)"),
 
       div(class = "food-table", do.call(tags$table, table_rows)),
 
@@ -472,7 +480,8 @@ server <- function(input, output, session) {
             )
           }
         )
-      ),
+      )
+      ,
 
       # Mitigation Factors
       div(class = "section-header-mitigation", "Mitigation Risk Factors"),
@@ -524,7 +533,7 @@ server <- function(input, output, session) {
                   user_inputs$risk_factors[[input_id]]
                 } else {
                   ""
-                },width="750px"
+                },width="1000px"
               )
             )
           }
