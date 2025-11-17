@@ -291,6 +291,33 @@ ui <- fluidPage(
       .country-selection-container .selectize-dropdown-content {
         text-align: center;
       }
+      .question-box-inherent {
+        background-color: #E8F2DC;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border-left: 4px solid #B0C69F;
+      }
+      .question-box-mitigation {
+        background-color: #F2EDE8;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border-left: 4px solid #DACCC0;
+      }
+      .question-box-compliance {
+        background-color: #F9EFD9;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border-left: 4px solid #E9D095;
+      }
+      .question-box-inherent label,
+      .question-box-mitigation label,
+      .question-box-compliance label {
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
     "
     ))
   ),
@@ -535,26 +562,33 @@ server <- function(input, output, session) {
         lapply(
           1:nrow(risk_factors[risk_factors$factor_type == "inherent", ]),
           function(i) {
-            factor <- risk_factors[risk_factors$factor_type == "inherent", ][i, ]
+            factor <- risk_factors[risk_factors$factor_type == "inherent", ][
+              i,
+            ]
             input_id <- paste0("inherent_", factor$factor_id)
-            
+
             column(
-              width=6,
-              selectInput(
-                input_id,
-                label = factor$factor_description,
-                choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
-                selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
-                  user_inputs$risk_factors[[input_id]]
-                } else {
-                  ""
-                },width="750px"
+              width = 6,
+              div(
+                class = "question-box-inherent",
+                selectInput(
+                  input_id,
+                  label = factor$factor_description,
+                  choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
+                  selected = if (
+                    !is.null(user_inputs$risk_factors[[input_id]])
+                  ) {
+                    user_inputs$risk_factors[[input_id]]
+                  } else {
+                    ""
+                  },
+                  width = "100%"
+                )
               )
             )
           }
         )
-      )
-      ,
+      ),
 
       # Mitigation Factors
       div(class = "section-header-mitigation", "Mitigation Risk Factors"),
@@ -567,18 +601,24 @@ server <- function(input, output, session) {
               i,
             ]
             input_id <- paste0("mitigation_", factor$factor_id)
-            
+
             column(
-              width=6,
-              selectInput(
-                input_id,
-                label = factor$factor_description,
-                choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
-                selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
-                  user_inputs$risk_factors[[input_id]]
-                } else {
-                  ""
-                },width="750px"
+              width = 6,
+              div(
+                class = "question-box-mitigation",
+                selectInput(
+                  input_id,
+                  label = factor$factor_description,
+                  choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
+                  selected = if (
+                    !is.null(user_inputs$risk_factors[[input_id]])
+                  ) {
+                    user_inputs$risk_factors[[input_id]]
+                  } else {
+                    ""
+                  },
+                  width = "100%"
+                )
               )
             )
           }
@@ -595,18 +635,24 @@ server <- function(input, output, session) {
               i,
             ]
             input_id <- paste0("compliance_", factor$factor_id)
-            
+
             column(
               width = 6,
-              selectInput(
-                input_id,
-                label = factor$factor_description,
-                choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
-                selected = if (!is.null(user_inputs$risk_factors[[input_id]])) {
-                  user_inputs$risk_factors[[input_id]]
-                } else {
-                  ""
-                },width="1000px"
+              div(
+                class = "question-box-compliance",
+                selectInput(
+                  input_id,
+                  label = factor$factor_description,
+                  choices = c("Select..." = "", "Yes" = "yes", "No" = "no"),
+                  selected = if (
+                    !is.null(user_inputs$risk_factors[[input_id]])
+                  ) {
+                    user_inputs$risk_factors[[input_id]]
+                  } else {
+                    ""
+                  },
+                  width = "100%"
+                )
               )
             )
           }
