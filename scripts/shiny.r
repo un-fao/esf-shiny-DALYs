@@ -58,10 +58,18 @@ ui <- fluidPage(
       .btn-validate { 
         background-color: #337ab7; 
         color: white; 
-        font-size: 18px; 
-        padding: 10px 30px;
-        margin-top: 10px;
-        font-family: 'Source Sans Variable' ;
+        font-size: 24px; 
+        padding: 18px 50px;
+        margin-top: 20px;
+        font-family: 'Source Sans Variable';
+        font-weight: bold;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .btn-validate:hover {
+        background-color: #23527c;
       }
       .section-header-product {
         background-color: #BCD4DE; /*#f5f5f5;*/
