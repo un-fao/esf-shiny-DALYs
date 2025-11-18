@@ -12,8 +12,8 @@ library(readxl)
 # dalys_values <- read.csv("data/dalys_values.csv", stringsAsFactors = FALSE)
 # risk_factors <- read.csv("data/risk_factors.csv", stringsAsFactors = FALSE)
 
-dalys_values <- read_excel("data/XLSX/dalys_values.xlsx", col_types = "text")
-risk_factors <- read_excel("data/XLSX/risk_factors.xls", col_types = "text")
+dalys_values <- read_excel("data/xlsx/dalys_values.xlsx", col_types = "text")
+risk_factors <- read_excel("data/xlsx/risk_factors.xlsx", col_types = "text")
 
 # Get list of available countries
 available_countries <- unique(dalys_values$country)
