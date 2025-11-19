@@ -83,8 +83,11 @@ ui <- fluidPage(
         background-color: #337ab7; 
         color: white; 
         font-size: 24px; 
-        padding: 18px 50px;
+        padding: 25px 200px;
         margin-top: 20px;
+        margin-left:auto;
+        margin-right:auto;
+        display:block;
         font-family: 'Source Sans Variable';
         font-weight: bold;
         border-radius: 8px;
@@ -569,8 +572,11 @@ server <- function(input, output, session) {
       ),
 
       div(
-        style = "padding-top: 30px;",
-        p("Please complete all required fields before proceeding.")
+        style = "padding-top: 30px; text-align: center;",
+        p(
+          "Please complete all fields before proceeding.",
+          style = "background-color: #dc3545; color: white; padding: 20px; border-radius: 8px; font-weight: bold; display: inline-block;"
+        )
       ),
 
       hr(),
@@ -689,7 +695,7 @@ server <- function(input, output, session) {
       # Validate button
       actionButton(
         "validateBtn",
-        "Calculate Risk Assessment",
+        "Calculate Risk Score",
         class = "btn-validate"
       )
     )
