@@ -708,7 +708,7 @@ server <- function(input, output, session) {
     }
 
     fluidPage(
-      h3(paste("Risk Assessment Results -", selected_country())),
+      h3(paste("RISK SCORE -", selected_country())),
 
       actionButton("backBtn", "← Back to Questionnaire"),
 
@@ -718,11 +718,11 @@ server <- function(input, output, session) {
       div(
         style = "background-color: #E8BF9B; padding: 20px; border-radius: 50px; text-align: center;",
         h4(
-          "Final Risk",
-          style = "color: white; font-weight: bold; font-size: 35px"
+          "FINAL RISK SCORE",
+          style = "color: black; font-weight: bold; font-size: 35px"
         ),
         h2(
-          style = "color: white; font-weight: bold; font-size: 30px", #a94442
+          style = "color: black; font-weight: bold; font-size: 30px", #a94442
           format(results$final_risk, scientific = FALSE, digits = 8)
         )
       ),
@@ -762,11 +762,11 @@ server <- function(input, output, session) {
           div(
             style = "background-color: #B0C69F; padding: 20px; border-radius: 5px; text-align: center;",
             h4(
-              "Inherent Risk",
-              style = "color: white; font-weight: bold; font-size: 35px"
+              "Inherent Risk Score",
+              style = "color: black; font-weight: bold; font-size: 30px"
             ),
             h2(
-              style = "color: white; font-weight: bold; font-size: 30px",
+              style = "color: black; font-weight: bold; font-size: 25px",
               format(results$inherent_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -776,11 +776,11 @@ server <- function(input, output, session) {
           div(
             style = "background-color: #DACCC0; padding: 20px; border-radius: 5px; text-align: center;",
             h4(
-              "Mitigated Risk",
-              style = "color: white; font-weight: bold; font-size: 35px"
+              "Mitigated Risk Score",
+              style = "color: black; font-weight: bold; font-size: 30px"
             ),
             h2(
-              style = "color: white; font-weight: bold; font-size: 30px",
+              style = "color: black; font-weight: bold; font-size: 25px",
               format(results$mitigated_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -790,11 +790,11 @@ server <- function(input, output, session) {
           div(
             style = "background-color: #E8BF9B; padding: 20px; border-radius: 5px; text-align: center;",
             h4(
-              "Final Risk",
-              style = "color: white; font-weight: bold; font-size: 35px"
+              "Final Risk Score",
+              style = "color: black; font-weight: bold; font-size: 30px"
             ),
             h2(
-              style = "color: white; font-weight: bold; font-size: 30px",
+              style = "color: black; font-weight: bold; font-size: 25px",
               format(results$final_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -1209,7 +1209,7 @@ server <- function(input, output, session) {
       labs(
         title = "Risk Calculation Progression",
         x = "",
-        y = "Risk Value (DALYs)"
+        y = ""
       ) +
       theme_minimal(base_size = 14) +
       theme(
