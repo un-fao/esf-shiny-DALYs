@@ -353,7 +353,7 @@ ui <- fluidPage(
         height = '40px'
       )),
       tags$li(
-        "Food Safety Questionnaire",
+        "FAO food safety risk categorization model for low- and middle-income countries",
         style = "font-weight: 1000; font-size: 24px; padding-left: 20px;"
       ),
       class = "b"
