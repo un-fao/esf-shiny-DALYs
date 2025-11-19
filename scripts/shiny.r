@@ -12,8 +12,12 @@ library(readxl)
 # dalys_values <- read.csv("data/dalys_values.csv", stringsAsFactors = FALSE)
 # risk_factors <- read.csv("data/risk_factors.csv", stringsAsFactors = FALSE)
 
-dalys_values <- read_excel("data/xlsx/dalys_values.xlsx", col_types = "text")
-risk_factors <- read_excel("data/xlsx/risk_factors.xlsx", col_types = "text")
+dalys_values <- read_excel("data/xlsx/dalys_values.xlsx")
+risk_factors <- read_excel("data/xlsx/risk_factors.xlsx")
+
+# Convert to base data frames to avoid tibble issues
+dalys_values <- as.data.frame(dalys_values, stringsAsFactors = FALSE)
+risk_factors <- as.data.frame(risk_factors, stringsAsFactors = FALSE)
 
 # Get list of available countries
 available_countries <- unique(dalys_values$country)
@@ -695,6 +699,14 @@ server <- function(input, output, session) {
   resultsUI <- function() {
     results <- calculateResults()
 
+    # Safe formatting function for risk values
+    format_risk <- function(value) {
+      if (is.null(value) || is.na(value) || is.infinite(value)) {
+        return("0")
+      }
+      return(format(value, scientific = FALSE, digits = 8))
+    }
+
     fluidPage(
       h3(paste("Risk Assessment Results -", selected_country())),
 
@@ -881,7 +893,7 @@ server <- function(input, output, session) {
     # Get country-specific data
     country <- selected_country()
     country_dalys <- dalys_values[dalys_values$country == country, ]
-    country_risk_factors <- risk_factors[risk_factors$country == country, ]
+    country_risk_factors <- risk_factors # Risk factors are universal across countries
 
     # Calculate DALYs for each food group
     dalys_by_group <- data.frame(
@@ -935,11 +947,12 @@ server <- function(input, output, session) {
             dalys_by_group <- rbind(
               dalys_by_group,
               data.frame(
-                food_group = fg,
-                hazard_type = hazard_types[[hz]],
-                quantity = qty,
-                daly_rate = daly_rate,
-                total_dalys = dalys
+                food_group = as.character(fg),
+                hazard_type = as.character(hazard_types[[hz]]),
+                quantity = as.numeric(qty),
+                daly_rate = as.numeric(daly_rate),
+                total_dalys = as.numeric(dalys),
+                stringsAsFactors = FALSE
               )
             )
           }
@@ -970,7 +983,7 @@ server <- function(input, output, session) {
         country_risk_factors$factor_id[i]
       )
       response <- input[[input_id]]
-      weight <- country_risk_factors$weight[i]
+      weight <- as.numeric(country_risk_factors$weight[i])
 
       # If the answer is "yes" (marked with x in Excel), use the weight
       # If the answer is "no" or blank, use 1 (no effect on multiplication)
@@ -986,10 +999,11 @@ server <- function(input, output, session) {
         risk_summary <- rbind(
           risk_summary,
           data.frame(
-            factor_type = country_risk_factors$factor_type[i],
-            factor = country_risk_factors$factor_description[i],
+            factor_type = as.character(country_risk_factors$factor_type[i]),
+            factor = as.character(country_risk_factors$factor_description[i]),
             present = "Yes",
-            weight = weight
+            weight = as.numeric(weight),
+            stringsAsFactors = FALSE
           )
         )
       }
@@ -1170,8 +1184,24 @@ server <- function(input, output, session) {
         results$mitigated_risk,
         results$final_risk
       ),
-      color = c("#B0C69F", "#DACCC0", "#E8BF9B") # c("#cccccc", "#d9edf7", "#fcf8e3", "#f2dede")
+      color = c("#B0C69F", "#DACCC0", "#E8BF9B")
     )
+
+    # Ensure no NA or infinite values
+    if (
+      any(is.na(progression_data$value)) ||
+        any(is.infinite(progression_data$value))
+    ) {
+      progression_data$value[
+        is.na(progression_data$value) | is.infinite(progression_data$value)
+      ] <- 0
+    }
+
+    # Calculate max value safely
+    max_value <- max(progression_data$value, na.rm = TRUE)
+    if (is.infinite(max_value) || is.na(max_value) || max_value <= 0) {
+      max_value <- 1
+    }
 
     ggplot(progression_data, aes(x = stage, y = value, fill = stage)) +
       geom_bar(stat = "identity", show.legend = FALSE) +
@@ -1197,7 +1227,7 @@ server <- function(input, output, session) {
         color = "#333333",
         family = "Source Sans Variable"
       ) +
-      ylim(0, max(progression_data$value) * 1.2)
+      ylim(0, max_value * 1.2)
   })
 
   # Product Type table
