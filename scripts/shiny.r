@@ -575,7 +575,7 @@ server <- function(input, output, session) {
         style = "padding-top: 30px; text-align: center;",
         p(
           "Please complete all fields before proceeding.",
-          style = "background-color: #dc3545; color: white; padding: 20px; border-radius: 8px; font-weight: bold; display: inline-block;"
+          style = "background-color: #dc3545; color: white; padding: 20px; border-radius: 0; font-weight: bold; display: inline-block;"
         )
       ),
 
@@ -714,7 +714,7 @@ server <- function(input, output, session) {
     }
 
     fluidPage(
-      h3(paste("RISK SCORE -", selected_country())),
+      h3(paste("Risk Score -", selected_country())),
 
       actionButton("backBtn", "← Back to Questionnaire"),
 
@@ -769,10 +769,10 @@ server <- function(input, output, session) {
             style = "background-color: #B0C69F; padding: 20px; border-radius: 5px; text-align: center;",
             h4(
               "Inherent Risk Score",
-              style = "color: black; font-weight: bold; font-size: 30px"
+              style = "color: white; font-weight: bold; font-size: 30px"
             ),
             h2(
-              style = "color: black; font-weight: bold; font-size: 25px",
+              style = "color: white; font-weight: bold; font-size: 25px",
               format(results$inherent_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -783,10 +783,10 @@ server <- function(input, output, session) {
             style = "background-color: #DACCC0; padding: 20px; border-radius: 5px; text-align: center;",
             h4(
               "Mitigated Risk Score",
-              style = "color: black; font-weight: bold; font-size: 30px"
+              style = "color: white; font-weight: bold; font-size: 30px"
             ),
             h2(
-              style = "color: black; font-weight: bold; font-size: 25px",
+              style = "color: white; font-weight: bold; font-size: 25px",
               format(results$mitigated_risk, scientific = FALSE, digits = 8)
             )
           )
@@ -797,10 +797,10 @@ server <- function(input, output, session) {
             style = "background-color: #E8BF9B; padding: 20px; border-radius: 5px; text-align: center;",
             h4(
               "Final Risk Score",
-              style = "color: black; font-weight: bold; font-size: 30px"
+              style = "color: white; font-weight: bold; font-size: 30px"
             ),
             h2(
-              style = "color: black; font-weight: bold; font-size: 25px",
+              style = "color: white; font-weight: bold; font-size: 25px",
               format(results$final_risk, scientific = FALSE, digits = 8)
             )
           )
