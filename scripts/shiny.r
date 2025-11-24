@@ -36,6 +36,20 @@ food_groups <- c(
   "Other foods including composite foods"
 )
 
+# Define tooltips for each food group
+food_group_tooltips <- list(
+  "Beef and lamb"="Beef, veal, lamb, and mutton. Includes processed and nonprocessed beef products (sausages, filet ame´ricain [steak tartare], hamburgers, etc.)",
+  "Pork"="Includes processed and nonprocessed pork products (sausages, luncheon meats, etc.)",
+  "Chicken and other poultry"="Includes duck, goose, ostrich, and turkey. Includes processed and nonprocessed poultry products (chicken wings, marinated chicken, confits, etc.)",
+  "Eggs"="Including egg products",
+  "Dairy products"="Milk, cheese, butter, cream, etc.",
+  "Fish and shellfish"="Includes all finfish, shellfish (mussels, oysters, etc.) and crustaceans (lobster, shrimp, etc.)",
+  "Fruit and vegetables"="Includes (mixtures of ) vegetables that are consumed raw or cooked",
+  "Beverages"="Includes all nonalcoholic and alcoholic beverages, except milk",
+  "Bread, grains, pastas, and bakery products"="Includes pastries",
+  "Other foods including composite foods"="Includes all categories not listed before (e.g., nuts, oils, confectionery, spices) and all foods that are sold to the consumer as a composite of two or more of the above categories (e.g., pizzas, lasagna, nasi-goreng [fried rice], sandwiches)"
+)
+
 # Define hazard types (short labels for table)
 hazard_types <- list(
   grow = "Product where pathogens can grow (e.g. meat, cheese)",
@@ -446,7 +460,14 @@ server <- function(input, output, session) {
       # Header row
       tags$tr(
         tags$th("Product Type", style = "text-align: center; width: 400px;"),
-        lapply(food_groups, function(fg) tags$th(fg))
+        lapply(food_groups, function(fg) {
+          tooltip_text <- food_group_tooltips[[fg]]
+          tags$th(
+            title = tooltip_text,  # This adds the hover tooltip
+            style = "cursor: help;",  # Changes cursor to indicate tooltip
+            fg
+          )
+        })
       ),
       
       # Row 1: grow
