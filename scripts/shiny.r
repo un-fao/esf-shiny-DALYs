@@ -24,17 +24,16 @@ available_countries <- unique(dalys_values$country)
 
 # Define food groups
 food_groups <- c(
-  "Lamb",
-  "Beef",
+  "Beef and lamb",
   "Pork",
-  "Poultry",
+  "Chicken and other poultry",
   "Eggs",
-  "Dairy",
+  "Dairy products",
   "Fish and shellfish",
   "Fruit and vegetables",
   "Beverages",
-  "Grains",
-  "Other foods"
+  "Bread, grains, pastas, and bakery products",
+  "Other foods including composite foods"
 )
 
 # Define hazard types (short labels for table)
