@@ -419,7 +419,7 @@ server <- function(input, output, session) {
   current_page <- reactiveVal("questionnaire")
 
   # Reactive value for selected country
-  selected_country <- reactiveVal(available_countries[1])
+  selected_country <- reactiveVal(NULL)
 
   # Store validation errors
   validation_errors <- reactiveVal(NULL)
@@ -562,8 +562,11 @@ server <- function(input, output, session) {
             selectInput(
               "country_select",
               label = tags$strong("Select a country"),
-              choices = available_countries,
-              selected = selected_country()
+              choices = c(
+                "Please select a country..." = "",
+                available_countries
+              ),
+              selected = ""
             )
           )
         )
@@ -711,8 +714,17 @@ server <- function(input, output, session) {
       return(format(value, scientific = FALSE, digits = 8))
     }
 
+    # Get country name for display
+    country_name <- if (
+      !is.null(selected_country()) && selected_country() != ""
+    ) {
+      selected_country()
+    } else {
+      "No Country Selected"
+    }
+
     fluidPage(
-      h3(paste("Risk Score -", selected_country())),
+      h3(paste("Risk Score -", country_name)),
 
       actionButton("backBtn", "← Back to Questionnaire"),
 
@@ -811,6 +823,11 @@ server <- function(input, output, session) {
   validateInputs <- function() {
     errors <- c()
 
+    # Check if country is selected
+    if (is.null(selected_country()) || selected_country() == "") {
+      errors <- c(errors, "Please select a country")
+    }
+
     # Check all select inputs
     all_factors <- risk_factors$factor_id
     all_types <- risk_factors$factor_type
@@ -889,7 +906,11 @@ server <- function(input, output, session) {
 
   # Update selected country when changed
   observeEvent(input$country_select, {
-    selected_country(input$country_select)
+    if (!is.null(input$country_select) && input$country_select != "") {
+      selected_country(input$country_select)
+    } else {
+      selected_country(NULL)
+    }
   })
 
   # Calculate results
