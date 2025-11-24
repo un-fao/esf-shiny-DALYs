@@ -222,7 +222,6 @@ ui <- fluidPage(
       .hazard-label {
         background-color: #f5f5f5;
         padding: 8px;
-        font-weight: bold;
         text-align: left;
         font-family: 'Source Sans Variable' ;
       }
@@ -446,15 +445,15 @@ server <- function(input, output, session) {
     table_rows <- list(
       # Header row
       tags$tr(
-        tags$th("Product Type", style = "text-align: left; width: 400px;"),
+        tags$th("Product Type", style = "text-align: center; width: 400px;"),
         lapply(food_groups, function(fg) tags$th(fg))
       ),
-
+      
       # Row 1: grow
       tags$tr(
         tags$td(
           class = "hazard-label",
-          "A product where pathogenic micro-organisms can grow (e.g. meat, cheese) (kg)"
+          HTML("<b>Products that support growth of foodborne pathogens</b> <i>(e.g., raw meat, soft cheese) — kg</i>")
         ),
         lapply(food_groups, function(fg) {
           input_id <- paste0("qty_grow_", gsub(" ", "_", fg))
@@ -474,12 +473,12 @@ server <- function(input, output, session) {
           )
         })
       ),
-
+      
       # Row 2: survive
       tags$tr(
         tags$td(
           class = "hazard-label",
-          "A product where pathogenic micro-organism can survive (e.g. fruit, vegetable) (kg)"
+          HTML("<b>Products where foodborne pathogens can survive without growth</b> <i>(e.g., fresh fruits, raw vegetables) — kg</i>")
         ),
         lapply(food_groups, function(fg) {
           input_id <- paste0("qty_survive_", gsub(" ", "_", fg))
@@ -499,12 +498,12 @@ server <- function(input, output, session) {
           )
         })
       ),
-
+      
       # Row 3: decrease
       tags$tr(
         tags$td(
           class = "hazard-label",
-          "A product that received treatment to decrease (e.g. fermented sausage) the pathogenic microbial load (kg)"
+          HTML("<b>Products treated to reduce but not eliminate foodborne pathogens</b> <i>(e.g., fermented sausages) — kg</i>")
         ),
         lapply(food_groups, function(fg) {
           input_id <- paste0("qty_decrease_", gsub(" ", "_", fg))
@@ -524,12 +523,12 @@ server <- function(input, output, session) {
           )
         })
       ),
-
+      
       # Row 4: kill
       tags$tr(
         tags$td(
           class = "hazard-label",
-          "A product that received a treatment that kill (e.g. canned food, cooked RTE) all pathogenic microorganisms (kg)"
+          HTML("<b>Products treated to eliminate all foodborne pathogens</b> <i>(e.g., canned foods, fully cooked ready-to-eat meals) — kg</i>")
         ),
         lapply(food_groups, function(fg) {
           input_id <- paste0("qty_kill_", gsub(" ", "_", fg))
