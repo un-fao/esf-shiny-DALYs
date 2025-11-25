@@ -596,7 +596,7 @@ server <- function(input, output, session) {
       div(
         style = "padding-top: 30px; text-align: left;",
         p(
-          "Please complete all fields before proceeding.",
+          "Please complete all fields before proceeding",
           style = "background-color: #dc3545; color: white; padding: 12px 20px; border-radius: 15px; font-weight: bold; display: inline-block;"
         )
       ),
