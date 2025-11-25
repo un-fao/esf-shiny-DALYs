@@ -9,10 +9,10 @@ rsconnect::deployApp(
   appPrimaryDoc = "scripts/shiny.r",
   appFiles = c(
     "scripts/shiny.r",
-    "data/dalys_values.csv",
-    "data/risk_factors.csv"
+    "data/XLSX/dalys_values.xlsx",
+    "data/XLSX/risk_factors.xlsx"
   ),
-  appName = "esf-shiny-DALYs"
+  appName = "fao-food-safety-risk-categorization-model" #"esf-shiny-DALYs"
 )
 
 

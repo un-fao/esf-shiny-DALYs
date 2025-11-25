@@ -1,0 +1,10 @@
+name: fao-food-safety-risk-categorization-model
+title:
+username: foodandagricultureorganization
+account: foodandagricultureorganization
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 16166444
+bundleId: 11231001
+url: https://foodandagricultureorganization.shinyapps.io/fao-food-safety-risk-categorization-model/
+version: 1

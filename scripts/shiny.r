@@ -12,8 +12,8 @@ library(readxl)
 # dalys_values <- read.csv("data/dalys_values.csv", stringsAsFactors = FALSE)
 # risk_factors <- read.csv("data/risk_factors.csv", stringsAsFactors = FALSE)
 
-dalys_values <- read_excel("data/xlsx/dalys_values.xlsx")
-risk_factors <- read_excel("data/xlsx/risk_factors.xlsx")
+dalys_values <- read_excel("data/XLSX/dalys_values.xlsx")
+risk_factors <- read_excel("data/XLSX/risk_factors.xlsx")
 
 # Convert to base data frames to avoid tibble issues
 dalys_values <- as.data.frame(dalys_values, stringsAsFactors = FALSE)
@@ -60,7 +60,7 @@ hazard_types <- list(
 
 # UI
 ui <- fluidPage(
-  titlePanel("Food Safety Risk Assessment Tool"),
+  titlePanel("FAO food safety risk categorization model"),
 
   tags$head(
     tags$style(HTML(
