@@ -594,10 +594,10 @@ server <- function(input, output, session) {
       ),
 
       div(
-        style = "padding-top: 30px; text-align: center;",
+        style = "padding-top: 30px; text-align: left;",
         p(
           "Please complete all fields before proceeding.",
-          style = "background-color: #dc3545; color: white; padding: 20px; border-radius: 0; font-weight: bold; display: inline-block;"
+          style = "background-color: #dc3545; color: white; padding: 12px 20px; border-radius: 15px; font-weight: bold; display: inline-block;"
         )
       ),
 
