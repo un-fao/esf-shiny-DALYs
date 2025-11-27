@@ -112,7 +112,7 @@ ui <- fluidPage(
         background-color: #23527c;
       }
       .section-header-product {
-        background-color: #BCD4DE; /*#f5f5f5;*/
+        background-color: #A8B5C4; /*#f5f5f5;*/
         padding: 10px;
         margin-top: 20px;
         margin-bottom: 10px;
@@ -196,7 +196,7 @@ ui <- fluidPage(
         font-family: 'Source Sans Variable' ;
       }
       .food-table {
-        margin-top: 20px;
+        margin-top: 10px;
       }
       .food-table table {
         width: 100%;
@@ -474,7 +474,7 @@ server <- function(input, output, session) {
       tags$tr(
         tags$td(
           class = "hazard-label",
-          HTML("<b>Products that support growth of foodborne pathogens</b> <i>(e.g., raw meat, soft cheese) — kg</i>")
+          HTML("<b>Products that support growth of foodborne pathogens</b> <i>(e.g., raw meat, soft cheese) — annual kg</i>")
         ),
         lapply(food_groups, function(fg) {
           input_id <- paste0("qty_grow_", gsub(" ", "_", fg))
@@ -499,7 +499,7 @@ server <- function(input, output, session) {
       tags$tr(
         tags$td(
           class = "hazard-label",
-          HTML("<b>Products where foodborne pathogens can survive without growth</b> <i>(e.g., fresh fruits, raw vegetables) — kg</i>")
+          HTML("<b>Products where foodborne pathogens can survive without growth</b> <i>(e.g., fresh fruits, raw vegetables) — annual kg</i>")
         ),
         lapply(food_groups, function(fg) {
           input_id <- paste0("qty_survive_", gsub(" ", "_", fg))
@@ -524,7 +524,7 @@ server <- function(input, output, session) {
       tags$tr(
         tags$td(
           class = "hazard-label",
-          HTML("<b>Products treated to reduce but not eliminate foodborne pathogens</b> <i>(e.g., fermented sausages) — kg</i>")
+          HTML("<b>Products treated to reduce but not eliminate foodborne pathogens</b> <i>(e.g., fermented sausages) — annual kg</i>")
         ),
         lapply(food_groups, function(fg) {
           input_id <- paste0("qty_decrease_", gsub(" ", "_", fg))
@@ -549,7 +549,7 @@ server <- function(input, output, session) {
       tags$tr(
         tags$td(
           class = "hazard-label",
-          HTML("<b>Products treated to eliminate all foodborne pathogens</b> <i>(e.g., canned foods, fully cooked ready-to-eat meals) — kg</i>")
+          HTML("<b>Products treated to eliminate all foodborne pathogens</b> <i>(e.g., canned foods, fully cooked ready-to-eat meals) — annual kg</i>")
         ),
         lapply(food_groups, function(fg) {
           input_id <- paste0("qty_kill_", gsub(" ", "_", fg))
@@ -594,9 +594,9 @@ server <- function(input, output, session) {
       ),
 
       div(
-        style = "padding-top: 30px; text-align: left;",
+        style = "padding-top: 30px; text-align: center;",
         p(
-          "Please complete all fields before proceeding",
+          "PLEASE COMPLETE ALL FIELDS BEFORE PROCEEDING",
           style = "background-color: #dc3545; color: white; padding: 12px 20px; border-radius: 15px; font-weight: bold; display: inline-block;"
         )
       ),
@@ -604,7 +604,7 @@ server <- function(input, output, session) {
       hr(),
 
       # Product quantities section - Excel-style table
-      # div(class = "section-header-product", "Product Type (in kg)"),
+      div(class = "section-header-product", "Food Business Operator (FBO) annual production volume"),
 
       div(class = "food-table", do.call(tags$table, table_rows)),
 
