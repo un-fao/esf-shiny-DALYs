@@ -32,3 +32,4 @@ Documentation/
 scripts/rsconnect/documents/shiny.r/shinyapps.io/foodandagricultureorganization/esf-shiny-DALYs.dcf
 esf-shiny-DALYs.Rproj
 esf-shiny-DALYs.dcf
+scripts/internal-deploy-app.r
