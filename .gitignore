@@ -29,7 +29,10 @@ __pycache__/
 venv/
 # === Exclude specific subfolders ===
 Documentation/
+scripts/rsconnect/
 scripts/rsconnect/documents/shiny.r/shinyapps.io/foodandagricultureorganization/esf-shiny-DALYs.dcf
+scripts/rsconnect/documents/shiny.r/shinyapps.io/foodandagricultureorganization/fao-food-safety-risk-categorization-model.dcf
 esf-shiny-DALYs.Rproj
 esf-shiny-DALYs.dcf
+fao-food-safety-risk-categorization-model.dcf
 scripts/internal-deploy-app.r
