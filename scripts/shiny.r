@@ -441,7 +441,8 @@ server <- function(input, output, session) {
   # Store user inputs (persistent across page changes)
   user_inputs <- reactiveValues(
     quantities = list(),
-    risk_factors = list()
+    risk_factors = list(),
+    country = NULL
   )
 
   # Render main content based on current page
@@ -587,7 +588,11 @@ server <- function(input, output, session) {
                 "Please select a country..." = "",
                 available_countries
               ),
-              selected = ""
+              selected = if (!is.null(user_inputs$country)) {
+                user_inputs$country
+              } else {
+                ""
+              }
             )
           )
         )
@@ -896,6 +901,11 @@ server <- function(input, output, session) {
 
   # Save user inputs to persistent storage
   saveInputs <- function() {
+    # Save country selection
+    if (!is.null(selected_country())) {
+      user_inputs$country <- selected_country()
+    }
+
     # Save quantities
     for (fg in food_groups) {
       fg_clean <- gsub(" ", "_", fg)
@@ -929,8 +939,10 @@ server <- function(input, output, session) {
   observeEvent(input$country_select, {
     if (!is.null(input$country_select) && input$country_select != "") {
       selected_country(input$country_select)
+      user_inputs$country <- input$country_select
     } else {
       selected_country(NULL)
+      user_inputs$country <- NULL
     }
   })
 
