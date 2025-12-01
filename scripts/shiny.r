@@ -269,6 +269,20 @@ ui <- fluidPage(
       ul.b {list-style:none;height: 50px;line-height: 50px;}
       ul.b li{border-right: 1px solid #c4c4c4;display: inline-block;float: left;padding: 0 5px;}
       ul.b li:last-child{border-right:0;}
+      .github-link {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        line-height: 50px;
+      }
+      .github-link img {
+        vertical-align: middle;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+      }
+      .github-link img:hover {
+        opacity: 1;
+      }
       .country-selection-container {
         text-align: center;
         padding: 20px 30px;
@@ -372,6 +386,17 @@ ui <- fluidPage(
         style = "font-weight: 1000; font-size: 24px; padding-left: 20px;"
       ),
       class = "b"
+    ),
+    tags$a(
+      href = "https://github.com/un-fao/esf-shiny-DALYs",
+      target = "_blank",
+      class = "github-link",
+      title = "View on GitHub",
+      tags$img(
+        src = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+        height = "40px",
+        alt = "GitHub"
+      )
     ),
     class = "header"
   ),
