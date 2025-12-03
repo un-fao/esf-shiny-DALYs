@@ -263,6 +263,19 @@ ui <- fluidPage(
         margin-top: 50px; 
         border-top: 1px solid #e0e0e0;
       }
+      .footer a {
+  color: #116BAC !important;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+ 
+.footer a:hover {
+  text-decoration: underline;
+}
+ 
+.footer a:visited {
+  color: #116BAC !important;
+}
       ul.a {list-style:none;margin-left: 30px;}
       ul.a li{border-right: 1px solid #c4c4c4;display: inline-block;float: left;padding: 0 5px;}
       ul.a li:last-child{border-right:0;}
@@ -383,7 +396,7 @@ ui <- fluidPage(
       )),
       tags$li(
         "FAO food safety risk categorization model for low- and middle-income countries",
-        style = "font-weight: 1000; font-size: 24px; padding-left: 20px;"
+        style = "color: #545454; font-family: Open Sans, sans-serif; font-weight: 600; font-size: 16px; padding-left: 20px;"
       ),
       class = "b"
     ),
