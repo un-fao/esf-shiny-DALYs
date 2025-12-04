@@ -63,6 +63,19 @@ ui <- fluidPage(
   titlePanel("FAO food safety risk categorization model"),
 
   tags$head(
+    # --- LOAD OPEN SANS FONT FROM GOOGLE FONTS ---
+    tags$link(rel = "preconnect", href = "https://fonts.googleapis.com"),
+    tags$link(
+      rel = "preconnect",
+      href = "https://fonts.gstatic.com",
+      crossorigin = "anonymous"
+    ),
+    tags$link(
+      href = "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap",
+      rel = "stylesheet"
+    ),
+    # ---------------------------------------------
+
     tags$style(HTML(
       "
        * {
@@ -396,7 +409,7 @@ ui <- fluidPage(
       )),
       tags$li(
         "FAO food safety risk categorization model for low- and middle-income countries",
-        style = "color: #545454; font-family: Open Sans, sans-serif; font-weight: 600; font-size: 16px; padding-left: 20px;"
+        style = "color: #545454; font-family: 'Open Sans', sans-serif !important; font-weight: 600; font-size: 16px; padding-left: 20px;"
       ),
       class = "b"
     ),
