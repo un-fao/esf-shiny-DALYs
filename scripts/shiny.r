@@ -60,7 +60,7 @@ hazard_types <- list(
 
 # UI
 ui <- fluidPage(
-  titlePanel("FAO food safety risk categorization model"),
+  # titlePanel("FAO food safety risk categorization model"),
 
   tags$head(
     # --- LOAD OPEN SANS FONT FROM GOOGLE FONTS ---
@@ -255,12 +255,13 @@ ui <- fluidPage(
       .header {
         background: white;
         color: black;
-        position: fixed;
+        position: sticky;
         left: 0; top: 0;
         width: 100%;
         font-family: 'Source Sans Variable' !important;
-        height: 60px; 
         z-index: 1000;
+        margin-top: 10px;
+        margin-left: -15px;
       }
       .body {
         padding-top: 80px;
@@ -292,14 +293,14 @@ ui <- fluidPage(
       ul.a {list-style:none;margin-left: 30px;}
       ul.a li{border-right: 1px solid #c4c4c4;display: inline-block;float: left;padding: 0 5px;}
       ul.a li:last-child{border-right:0;}
-      ul.b {list-style:none;height: 50px;line-height: 50px;}
-      ul.b li{border-right: 1px solid #c4c4c4;display: inline-block;float: left;padding: 0 5px;}
+      ul.b {list-style:none;min-height: 50px;line-height: 1.3;}
+      ul.b li{border-right: 1px solid #c4c4c4;display: inline-block;vertical-align: middle;padding: 0 5px;}
       ul.b li:last-child{border-right:0;}
       .github-link {
         position: absolute;
-        right: 20px;
-        top: 10px;
-        line-height: 50px;
+        right: 0px;
+        top: 5px;
+        line-height: 20px;
       }
       .github-link img {
         vertical-align: middle;
@@ -397,6 +398,15 @@ ui <- fluidPage(
         font-weight: 600;
         margin-bottom: 8px;
       }
+      .rk-btn {
+        display:inline-block; padding:7px 14px;
+        background-color:#1a4f7a; color:#fff !important;
+        border-radius:4px; text-decoration:none;
+        font-weight:600; font-size:14px;
+        transition:background-color .15s ease;
+      }
+      .rk-btn:hover { background-color:#143e61; }
+      .rk-btn:focus-visible { outline:2px solid #f0a500; outline-offset:2px; }
     "
     ))
   ),
@@ -427,6 +437,26 @@ ui <- fluidPage(
     class = "header"
   ),
 
+  div(
+    style = "background-color:#eef4f8; border-left:4px solid #1a4f7a;
+           padding:12px 16px; margin-bottom:15px; border-radius:4px;",
+    span(
+      "This web app is published by FAO as part of the Risk-Based Inspection ",
+      "Resource Kit. Users are encouraged to familiarize themselves with the ",
+      "Resource Kit prior to use."
+    ),
+    div(
+      style = "margin-top:10px;",
+      tags$a(
+        "Open the Resource Kit",
+        href = "https://www.fao.org/risk-based-inspection-kit/en",
+        target = "_blank", rel = "noopener",
+        class = "rk-btn", role = "button",
+        `aria-label` = "Open the Resource Kit (opens in a new tab)"
+      )
+    )
+  ),
+  
   uiOutput("mainContent"),
 
   tags$footer(
