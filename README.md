@@ -9,7 +9,7 @@ This Shiny App is a key component of a wider FAO project focused on **risk categ
 
 The tool works in tandem with other resources to provide a standardized, data-driven approach to food safety:
 
-* **Wider Ecosystem:** The application will be hosted on a dedicated FAO website, currently in development, similar to the [GHP Toolbox](https://www.fao.org/good-hygiene-practices-haccp-toolbox/en) and [JECFA Toolbox](https://www.fao.org/jefca-toolbox-veterinary-drugs-assessment/en).
+* **Wider Ecosystem:** The application will be hosted on a dedicated FAO website, ~~currently in development~~ [FAO Risk-based inspection Resource Kit](https://www.fao.org/risk-based-inspection-kit/en), similar to the [GHP Toolbox](https://www.fao.org/good-hygiene-practices-haccp-toolbox/en) and [JECFA Toolbox](https://www.fao.org/jefca-toolbox-veterinary-drugs-assessment/en).
 * **Resource Kit:** The app is referenced within a series of PDF modules that collectively form a **resource kit** for competent authorities.
 
 ### Methodology
